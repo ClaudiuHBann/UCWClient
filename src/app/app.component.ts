@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component } from '@angular/core'
+import { HttpClient } from '@angular/common/http'
+import { ConvertInfoComponent } from './UConverter/convert-info/convert-info.component'
 
 @Component({
 	selector: 'app-root',
@@ -7,18 +9,18 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-	title = "Client"
+	title = "Universal Converter"
 	currentCategory = "Choose a category..."
-	categories = ["Currency", "Temperature", "Number.Base"]
-	categoriesTemperature = ["Celsius", "Fahrenheit", "Kelvin"]
 	isFromInit = false
 	isToInit = false
 	index = 0
 	textAreaInputText = ""
 	textAreaOutputText = ""
 
+	constructor(private http: HttpClient) { }
+
 	OnClickButtonCategory(categoryNumber: number) {
-		this.currentCategory = this.categories[categoryNumber - 1] + " Converter"
+		this.currentCategory = ConvertInfoComponent.categories[categoryNumber - 1] + " Converter"
 	}
 
 	OnClickButtonSwitch() {
@@ -33,18 +35,18 @@ export class AppComponent {
 	}
 
 	FromTo(index: number) {
-		if (index < this.categoriesTemperature.length) {
+		if (index < ConvertInfoComponent.categoriesTemperature.length) {
 			var element = document.getElementById("dropdownMenuButtonFrom")
 
 			if (element) {
-				element.textContent = this.categoriesTemperature[index]
+				element.textContent = ConvertInfoComponent.categoriesTemperature[index]
 			}
 		}
 		else {
 			var element = document.getElementById("dropdownMenuButtonTo")
 
 			if (element) {
-				element.textContent = this.categoriesTemperature[index - this.categoriesTemperature.length]
+				element.textContent = ConvertInfoComponent.categoriesTemperature[index - ConvertInfoComponent.categoriesTemperature.length]
 			}
 		}
 	}
@@ -72,7 +74,7 @@ export class AppComponent {
 
 	OnClickButtonFrom() {
 		if (this.isFromInit == false) {
-			this.categoriesTemperature.forEach(element => {
+			ConvertInfoComponent.categoriesTemperature.forEach(element => {
 				this.AppendLIWithAToUL("dropdownMenuFromUL", '#', "dropdown-item", element, this.index++)
 			})
 
@@ -82,7 +84,7 @@ export class AppComponent {
 
 	OnClickButtonTo() {
 		if (this.isToInit == false) {
-			this.categoriesTemperature.forEach(element => {
+			ConvertInfoComponent.categoriesTemperature.forEach(element => {
 				this.AppendLIWithAToUL("dropdownMenuToUL", '#', "dropdown-item", element, this.index++)
 			})
 
@@ -91,7 +93,26 @@ export class AppComponent {
 	}
 
 	OnClickButtonConvert() {
-		this.textAreaOutputText = this.textAreaInputText
+		this.http.post<any>("https://localhost:7212/ConvertInfo/Post", {
+			"category": 1,
+			"items": [
+				"string1",
+				"string2",
+				"string3",
+				"string3"
+			],
+			"from": 2,
+			"to": 3
+		}, {
+			headers: { "Content-Type": "application/json" }
+		}).subscribe({
+			next: result => {
+				console.log(result)
+			},
+			error: error => {
+				console.error(error)
+			}
+		})
 	}
 
 	OnClickButtonCTC() {
