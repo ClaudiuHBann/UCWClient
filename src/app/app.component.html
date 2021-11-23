@@ -36,32 +36,32 @@
         <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px;"></textarea>
     </div>
 
-    <div class="flex-container " style="display: flex; justify-content: space-evenly; padding-top: 1%; ">
-        <button type="button " class="btn btn-secondary " (click)="OnClickButtonSwitch() ">Switch</button>
+    <div class="flex-container" style="display: flex; justify-content: space-evenly; padding-top: 1%;">
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()">Switch</button>
 
-        <div class="dropdown ">
-            <button class="btn btn-secondary dropdown-toggle " (click)="OnClickButtonFrom() " type="button " id="dropdownMenuButtonFrom " data-toggle="dropdown " aria-expanded="false ">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false">
                 From
             </button>
-            <ul class="dropdown-menu " aria-labelledby="dropdownMenuButtonFrom " id="dropdownMenuFromUL " style="max-height: 170px; overflow-y: auto; "></ul>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button " class="btn btn-secondary " (click)="OnClickButtonConvert()">Convert</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()">Convert</button>
 
-        <div class="dropdown ">
-            <button class="btn btn-secondary dropdown-toggle " (click)="OnClickButtonTo() " type="button " id="dropdownMenuButtonTo " data-toggle="dropdown " aria-expanded="false ">
+        <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false">
                 To
             </button>
-            <ul class="dropdown-menu " aria-labelledby="dropdownMenuButtonTo " id="dropdownMenuToUL " style="max-height: 170px; overflow-y: auto; "></ul>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button " class="btn btn-secondary " (click)="OnClickButtonCTC() ">CTC</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()">CTC</button>
     </div>
 
     <br>
 
-    <div class="mb-3 ">
-        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text... " id="textAreaOutput " style="resize: vertical; min-height: 250px; "></textarea>
+    <div class="mb-3">
+        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px;"></textarea>
     </div>
 </div>
 
