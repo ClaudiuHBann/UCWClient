@@ -20,48 +20,54 @@
                 </li>
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search">
+                <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" style="background-color: #333; color: wheat; border-color: #3f3f3f;">
                 <button class="btn" style="color: wheat;" type="submit">Search</button>
             </form>
         </div>
     </div>
 </nav>
 
-<div style="padding-left: 20%; padding-right: 30%; padding-top: 1%; padding-bottom: 1%;">
+<div style="padding-left: 20%; padding-right: 30%; padding-top: 1%; padding-bottom: 1%; color: wheat;">
     <h1>{{currentCategory}}</h1>
 
     <br>
 
     <div class="mb-3">
-        <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px;"></textarea>
+        <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333;  border-radius: 15px;"></textarea>
     </div>
 
     <div class="flex-container" style="display: flex; justify-content: space-evenly; padding-top: 1%;">
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()">Switch</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">Switch</button>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">
                 From
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()">Convert</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">Convert</button>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">
                 To
             </button>
             <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()">CTC</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">CTC</button>
     </div>
 
     <br>
 
     <div class="mb-3">
-        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px;"></textarea>
+        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333;  border-radius: 15px;"></textarea>
+    </div>
+</div>
+
+<div class="toast" role="alert" id="toastID" aria-live="assertive" aria-atomic="true">
+    <div class="toast-body" style="text-align: center; font-size: larger; color: wheat;">
+        Output text has been copied to clipboard...
     </div>
 </div>
 
