@@ -1,7 +1,6 @@
-import { Component } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import { ConvertInfoComponent } from './UConverter/convert-info/convert-info.component'
-import * as $ from 'jquery'
+import { Component } from '@angular/core'
+import { ConvertInfoComponent } from './convert-info/convert-info.component'
 
 @Component({
 	selector: 'app-root',
@@ -10,25 +9,29 @@ import * as $ from 'jquery'
 })
 
 export class AppComponent {
+	constructor(private http: HttpClient) { }
+
 	title = "Universal Converter"
 	currentCategory = "Choose a category..."
-	lastCategory1 = "Choose a category..."
-	lastCategory2 = "Choose a category..."
-
-	isFromInit = false
-	isToInit = false
-	index = 0
-
-	from = 0
-	to = 0
 
 	textAreaInputText = ""
 	textAreaOutputText = ""
 
-	constructor(private http: HttpClient) { }
-
 	OnClickButtonCategory(categoryNumber: number) {
 		this.currentCategory = ConvertInfoComponent.categories[categoryNumber - 1] + " Converter"
+
+		var element = document.getElementById("dropdownMenuButtonFrom")
+		if (element) {
+			element.textContent = "From"
+		}
+
+		var element = document.getElementById("dropdownMenuButtonTo")
+		if (element) {
+			element.textContent = "To"
+		}
+
+		this.textAreaInputText = ""
+		this.textAreaOutputText = ""
 	}
 
 	OnClickButtonSwitch() {
@@ -40,23 +43,39 @@ export class AppComponent {
 			from.textContent = to.textContent
 			to.textContent = swap
 		}
+
+		var fromValue = ConvertInfoComponent.from
+		ConvertInfoComponent.from = ConvertInfoComponent.to
+		ConvertInfoComponent.to = fromValue
 	}
 
 	FromTo(index: number) {
-		if (index < ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].length) {
+		let indexOfCurrentCategory = ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])
+
+		if (index < 0) {
 			var element = document.getElementById("dropdownMenuButtonFrom")
 
 			if (element) {
-				element.textContent = ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])][index]
-				this.from = index
+				element.textContent = ConvertInfoComponent.categoriesFromTo[indexOfCurrentCategory][-index - 1]
+				ConvertInfoComponent.from = -index - 1
 			}
 		}
 		else {
 			var element = document.getElementById("dropdownMenuButtonTo")
 
 			if (element) {
-				element.textContent = ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])][index - ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].length]
-				this.to = index - ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].length
+				element.textContent = ConvertInfoComponent.categoriesFromTo[indexOfCurrentCategory][index - 1]
+				ConvertInfoComponent.to = index - 1
+			}
+		}
+
+		if (this.currentCategory.split(' ')[0] == ConvertInfoComponent.categories[2]) {
+			var element1 = document.getElementById("dropdownMenuButtonFrom")
+			var element2 = document.getElementById("dropdownMenuButtonTo")
+
+			if (element1 && element2) {
+				ConvertInfoComponent.from = Number(element1.textContent)
+				ConvertInfoComponent.to = Number(element2.textContent)
 			}
 		}
 	}
@@ -82,82 +101,69 @@ export class AppComponent {
 		ul?.appendChild(li)
 	}
 
-	OnClickButtonFrom() {
-		if (this.lastCategory1 != this.currentCategory) {
-			var ul = document.getElementById('dropdownMenuFromUL')
-			if (ul) {
-				while (ul.firstChild) {
-					ul.removeChild(ul.firstChild)
-				}
+	GenerateLIElements(elementID: string, index: number, negative: boolean) {
+		var fromUL = document.getElementById(elementID)
+		if (fromUL) {
+			while (fromUL.firstChild) {
+				fromUL.removeChild(fromUL.firstChild)
 			}
-
-			this.isFromInit = false
 		}
 
-		if (this.isFromInit == false) {
-			ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
-				this.AppendLIWithAToUL("dropdownMenuFromUL", '#', "dropdown-item", element, this.index++)
-			})
+		ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
+			this.AppendLIWithAToUL(elementID, '#', "dropdown-item", element, negative ? index-- : index++)
+		})
+	}
 
-			this.isFromInit = true
-			this.lastCategory1 = this.currentCategory
+	OnClickButtonFrom() {
+		var fromUL = document.getElementById('dropdownMenuFromUL')
+		if (fromUL) {
+			let index = -1
+			this.GenerateLIElements("dropdownMenuFromUL", index, true)
 		}
 	}
 
 	OnClickButtonTo() {
-		if (this.lastCategory2 != this.currentCategory) {
-			var ul = document.getElementById('dropdownMenuToUL')
-			if (ul) {
-				while (ul.firstChild) {
-					ul.removeChild(ul.firstChild)
-				}
-			}
-
-			this.isToInit = false
-		}
-
-		if (this.isToInit == false) {
-			ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
-				this.AppendLIWithAToUL("dropdownMenuToUL", '#', "dropdown-item", element, this.index++)
-			})
-
-			this.isToInit = true
-			this.lastCategory2 = this.currentCategory
+		var toUL = document.getElementById('dropdownMenuToUL')
+		if (toUL) {
+			let index = 1
+			this.GenerateLIElements("dropdownMenuToUL", index, false)
 		}
 	}
 
 	replaceAll(str: string, find: string, replace: string) {
 		return str.replace(new RegExp(find, 'g'), replace);
-	  }
+	}
+
+	FormatInputTextAndChangeCIItems() {
+		let formattedInputText: string = this.textAreaInputText
+		formattedInputText = this.replaceAll(formattedInputText, ',', ' ')
+		formattedInputText = this.replaceAll(formattedInputText, '\n', ' ')
+		formattedInputText = formattedInputText.replace(/\s+/g, ' ')
+
+		ConvertInfoComponent.items = []
+		formattedInputText.split(' ').forEach(element => {
+			ConvertInfoComponent.items.push(element)
+		})
+	}
 
 	OnClickButtonConvert() {
-		let items = new Array()
+		this.textAreaOutputText = ""
+		this.FormatInputTextAndChangeCIItems()
 
-		this.textAreaInputText.split(',').forEach(element => {
-			element = this.replaceAll(element, " ", "")
-			element = this.replaceAll(element, ",", "")
-			element = this.replaceAll(element, "\n", "")
-			items.push(element)
-		})
+		ConvertInfoComponent.category = ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])
 
-		console.log(items)
-
-		this.http.post<any>("https://localhost:7212/ConvertInfo/Post", {
-			"category": ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0]),
-			"items": JSON.stringify(items),
-			"from": this.from,
-			"to": this.to
+		this.http.post<any>("http://localhost:5212/ConvertInfo/Post", {
+			"category": ConvertInfoComponent.category,
+			"items": ConvertInfoComponent.items,
+			"from": ConvertInfoComponent.from,
+			"to": ConvertInfoComponent.to
 		}, {
 			headers: { "Content-Type": "application/json" }
 		}).subscribe({
-			next: result => {
-				result.forEach((item: string) => {
-					this.textAreaOutputText += item + '\n'
-				})
-			},
-			error: error => {
-				console.error(error)
-			}
+			next: result => result.forEach((item: string) => {
+				this.textAreaOutputText += item + '\n'
+			}),
+			error: error => console.error(error)
 		})
 	}
 
