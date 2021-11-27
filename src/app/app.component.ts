@@ -152,7 +152,7 @@ export class AppComponent {
 
 		ConvertInfoComponent.category = ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])
 
-		this.http.post<any>("http://localhost:5212/ConvertInfo/Post", {
+		this.http.post<any>("http://162.55.32.18:8/ConvertInfo/Post", {
 			"category": ConvertInfoComponent.category,
 			"items": ConvertInfoComponent.items,
 			"from": ConvertInfoComponent.from,
