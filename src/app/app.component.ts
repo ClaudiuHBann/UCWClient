@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
-import { ConvertInfoComponent } from './convert-info/convert-info.component'
+import { ConvertInfo } from './models/convert-info'
 
 @Component({
 	selector: 'app-root',
@@ -18,7 +18,7 @@ export class AppComponent {
 	textAreaOutputText = ""
 
 	OnClickButtonCategory(categoryNumber: number) {
-		this.currentCategory = ConvertInfoComponent.categories[categoryNumber - 1] + " Converter"
+		this.currentCategory = ConvertInfo.categories[categoryNumber - 1] + " Converter"
 
 		var element = document.getElementById("dropdownMenuButtonFrom")
 		if (element) {
@@ -44,38 +44,38 @@ export class AppComponent {
 			to.textContent = swap
 		}
 
-		var fromValue = ConvertInfoComponent.from
-		ConvertInfoComponent.from = ConvertInfoComponent.to
-		ConvertInfoComponent.to = fromValue
+		var fromValue = ConvertInfo.from
+		ConvertInfo.from = ConvertInfo.to
+		ConvertInfo.to = fromValue
 	}
 
 	FromTo(index: number) {
-		let indexOfCurrentCategory = ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])
+		let indexOfCurrentCategory = ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])
 
 		if (index < 0) {
 			var element = document.getElementById("dropdownMenuButtonFrom")
 
 			if (element) {
-				element.textContent = ConvertInfoComponent.categoriesFromTo[indexOfCurrentCategory][-index - 1]
-				ConvertInfoComponent.from = -index - 1
+				element.textContent = ConvertInfo.categoriesFromTo[indexOfCurrentCategory][-index - 1]
+				ConvertInfo.from = -index - 1
 			}
 		}
 		else {
 			var element = document.getElementById("dropdownMenuButtonTo")
 
 			if (element) {
-				element.textContent = ConvertInfoComponent.categoriesFromTo[indexOfCurrentCategory][index - 1]
-				ConvertInfoComponent.to = index - 1
+				element.textContent = ConvertInfo.categoriesFromTo[indexOfCurrentCategory][index - 1]
+				ConvertInfo.to = index - 1
 			}
 		}
 
-		if (this.currentCategory.split(' ')[0] == ConvertInfoComponent.categories[2]) {
+		if (this.currentCategory.split(' ')[0] == ConvertInfo.categories[2]) {
 			var element1 = document.getElementById("dropdownMenuButtonFrom")
 			var element2 = document.getElementById("dropdownMenuButtonTo")
 
 			if (element1 && element2) {
-				ConvertInfoComponent.from = Number(element1.textContent)
-				ConvertInfoComponent.to = Number(element2.textContent)
+				ConvertInfo.from = Number(element1.textContent)
+				ConvertInfo.to = Number(element2.textContent)
 			}
 		}
 	}
@@ -109,7 +109,7 @@ export class AppComponent {
 			}
 		}
 
-		ConvertInfoComponent.categoriesFromTo[ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
+		ConvertInfo.categoriesFromTo[ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
 			this.AppendLIWithAToUL(elementID, '#', "dropdown-item", element, negative ? index-- : index++)
 		})
 	}
@@ -140,9 +140,9 @@ export class AppComponent {
 		formattedInputText = this.replaceAll(formattedInputText, '\n', ' ')
 		formattedInputText = formattedInputText.replace(/\s+/g, ' ')
 
-		ConvertInfoComponent.items = []
+		ConvertInfo.items = []
 		formattedInputText.split(' ').forEach(element => {
-			ConvertInfoComponent.items.push(element)
+			ConvertInfo.items.push(element)
 		})
 	}
 
@@ -150,13 +150,13 @@ export class AppComponent {
 		this.textAreaOutputText = ""
 		this.FormatInputTextAndChangeCIItems()
 
-		ConvertInfoComponent.category = ConvertInfoComponent.categories.indexOf(this.currentCategory.split(' ')[0])
+		ConvertInfo.category = ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])
 
 		this.http.post<any>("http://162.55.32.18:8/ConvertInfo/Post", {
-			"category": ConvertInfoComponent.category,
-			"items": ConvertInfoComponent.items,
-			"from": ConvertInfoComponent.from,
-			"to": ConvertInfoComponent.to
+			"category": ConvertInfo.category,
+			"items": ConvertInfo.items,
+			"from": ConvertInfo.from,
+			"to": ConvertInfo.to
 		}, {
 			headers: { "Content-Type": "application/json" }
 		}).subscribe({
