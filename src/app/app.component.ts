@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
-import { ActivatedRoute, ParamMap, Router } from '@angular/router'
+import { ActivatedRoute, Router } from '@angular/router'
 import { isNumeric } from 'jquery'
 import { ConvertInfo } from './models/convert-info'
 
@@ -19,14 +19,62 @@ export class AppComponent {
 
 			ConvertInfo.categoriesFromTo[index] = ConvertInfo.categoriesFromTo[index].sort()
 		}
+	}
 
+	ngOnInit() {
 		this._route.queryParams.subscribe(params => {
-			console.log(params["category"]);
-			console.log(params["category"] != undefined)
-
 			if (params["category"] != undefined) {
-				console.log("am intrat")
-				this.OnClickButtonCategory(ConvertInfo.categories.indexOf(params["category"]))
+				if (ConvertInfo.categories.indexOf(params["category"]) == -1) {
+					this._router.navigate([], {
+						relativeTo: this._route,
+						queryParams: {
+							category: null
+						},
+						queryParamsHandling: 'merge'
+					});
+				}
+				else {
+					this.OnClickButtonCategory(ConvertInfo.categories.indexOf(params["category"]) + 1)
+					ConvertInfo.category = ConvertInfo.categories.indexOf(params["category"])
+				}
+			}
+
+			if (params["from"] != undefined) {
+				if (ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["from"]) == -1) {
+					this._router.navigate([], {
+						relativeTo: this._route,
+						queryParams: {
+							from: null
+						},
+						queryParamsHandling: 'merge'
+					});
+				}
+				else {
+					var element = document.getElementById("dropdownMenuButtonFrom")
+					if (element) {
+						element.textContent = params["from"]
+						ConvertInfo.from = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["from"])
+					}
+				}
+			}
+
+			if (params["to"] != undefined) {
+				if (ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["to"]) == -1) {
+					this._router.navigate([], {
+						relativeTo: this._route,
+						queryParams: {
+							to: null
+						},
+						queryParamsHandling: 'merge'
+					});
+				}
+				else {
+					var element = document.getElementById("dropdownMenuButtonTo")
+					if (element) {
+						element.textContent = params["to"]
+						ConvertInfo.to = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["to"])
+					}
+				}
 			}
 		});
 	}
@@ -94,6 +142,15 @@ export class AppComponent {
 		var fromValue = ConvertInfo.from
 		ConvertInfo.from = ConvertInfo.to
 		ConvertInfo.to = fromValue
+
+		this._router.navigate([], {
+			relativeTo: this._route,
+			queryParams: {
+				from: ConvertInfo.categoriesFromTo[ConvertInfo.category][ConvertInfo.from],
+				to: ConvertInfo.categoriesFromTo[ConvertInfo.category][ConvertInfo.to]
+			},
+			queryParamsHandling: 'merge'
+		});
 	}
 
 	FromTo(index: number) {
@@ -106,6 +163,14 @@ export class AppComponent {
 				element.textContent = ConvertInfo.categoriesFromTo[indexOfCurrentCategory][-index - 1]
 				ConvertInfo.from = -index - 1
 			}
+
+			this._router.navigate([], {
+				relativeTo: this._route,
+				queryParams: {
+					from: ConvertInfo.categoriesFromTo[ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])][ConvertInfo.from]
+				},
+				queryParamsHandling: 'merge'
+			});
 		}
 		else {
 			var element = document.getElementById("dropdownMenuButtonTo")
@@ -114,6 +179,14 @@ export class AppComponent {
 				element.textContent = ConvertInfo.categoriesFromTo[indexOfCurrentCategory][index - 1]
 				ConvertInfo.to = index - 1
 			}
+
+			this._router.navigate([], {
+				relativeTo: this._route,
+				queryParams: {
+					to: ConvertInfo.categoriesFromTo[ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])][ConvertInfo.to]
+				},
+				queryParamsHandling: 'merge'
+			});
 		}
 
 		if (this.currentCategory.split(' ')[0] == ConvertInfo.categories[2]) {
@@ -127,19 +200,18 @@ export class AppComponent {
 		}
 	}
 
-	AppendLIWithAToUL(id: string, href: string, cles: string, textContent: string, index: number) {
+	AppendLIWithAToUL(id: string, cles: string, textContent: string, index: number) {
 		var ul = document.getElementById(id)
 		var li = document.createElement("li")
 
 		const a = document.createElement('a')
 		a.textContent = textContent;
 
-		a.setAttribute("href", href)
 		a.setAttribute("class", cles)
 
 		a.setAttribute("style", "color: wheat;") // temporary
 
-		a.setAttribute("onclic", "FromTo(index)")
+		a.setAttribute("onclick", "FromTo(index)")
 		a.onclick = () => this.FromTo(index)
 
 
@@ -157,7 +229,7 @@ export class AppComponent {
 		}
 
 		ConvertInfo.categoriesFromTo[ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])].forEach(element => {
-			this.AppendLIWithAToUL(elementID, '#', "dropdown-item", element, negative ? index-- : index++)
+			this.AppendLIWithAToUL(elementID, "dropdown-item", element, negative ? index-- : index++)
 		})
 	}
 
