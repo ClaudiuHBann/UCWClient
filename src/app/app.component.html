@@ -1,27 +1,27 @@
 <nav class="navbar navbar-expand-lg sticky-top" style="background-color: #333;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#home" style="padding-left: 25px; padding-right: 25px; font: bold; font-size: 25px; color: wheat;">Universal Converter</a>
+        <a class="navbar-brand" href="" style="padding-left: 25px; padding-right: 25px; font: bold; font-size: 25px; color: wheat;">Universal Converter</a>
         <button class="navbar-toggler ml-auto custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon" style="color: wheat;"></span>
       </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(1)" href="#currency">Currency</a>
+                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(1)" onclick="event.preventDefault();" href="">Currency</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(2)" href="#temperature">Temperature</a>
+                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(2)" onclick="event.preventDefault();" href="">Temperature</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="color: wheat;" aria-expanded="false">Number</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#base" (click)="OnClickButtonCategory(3)">Base</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #333;">
+                        <li><a class="dropdown-item" href="" (click)="OnClickButtonCategory(3)" onclick="event.preventDefault();" style="color: wheat;">Base</a></li>
                     </ul>
                 </li>
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" style="background-color: #333; color: wheat; border-color: wheat;">
-                <button class="btn" style="color: wheat; border-color: wheat;" type="submit">Search</button>
+                <button class="btn" id="buttonSearch" (click)="OnClickButtonSearch()" style="color: wheat; border-color: wheat;" type="submit">Search</button>
             </form>
         </div>
     </div>
@@ -33,35 +33,35 @@
     <br>
 
     <div class="mb-3">
-        <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333;  border-radius: 15px;"></textarea>
+        <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333; border-radius: 15px;"></textarea>
     </div>
 
     <div class="flex-container" style="display: flex; justify-content: space-evenly; padding-top: 1%;">
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">Switch</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">Switch</button>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">
                 From
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto;"></ul>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto; background-color: #333;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">Convert</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">Convert</button>
 
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">
+            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">
                 To
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto;"></ul>
+            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto; background-color: #333;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()" style="background: #333; color: wheat; border-color: #3f3f3f;  border-radius: 15px;">CTC</button>
+        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">CTC</button>
     </div>
 
     <br>
 
     <div class="mb-3">
-        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333;  border-radius: 15px;"></textarea>
+        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333; border-radius: 15px;"></textarea>
     </div>
 </div>
 
@@ -71,12 +71,32 @@
     </div>
 </div>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+            </div>
+            <div class="modal-body">
+                Do you want to copy the selected contact me info to clipboard?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="OnClickModal()">Yes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <footer class="bg-light text-center fixed-bottom">
     <div class="text-center" style="background-color: #333; display: flex">
         <div class="container text-center" style="color: wheat;">Contact Me:
             <section style="display: inline-block;">
-                <a class="btn btn-primary btn-floating m-1" style="background-color: #dd4b39;"><i class="fab fa-google"></i> 123uidualcnnamreh@gmail.com</a>
-                <a class="btn btn-primary btn-floating m-1" style="background-color: #5865F2;"><i class="fab fa-discord"></i> Claudiu HBann#6612</a>
+                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-floating m-1" id="contactMeGoogle" (click)="OnClickButtonContactMe('contactMeGoogle')" style="background-color: #dd4b39;"><i class="fab fa-google"></i> 123uidualcnnamreh@gmail.com</a>
+                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-floating m-1" id="contactMeDiscord" (click)="OnClickButtonContactMe('contactMeDiscord')" style="background-color: #5865F2;"><i class="fab fa-discord"></i> Claudiu HBann#6612</a>
             </section>
         </div>
         <div class="container text-center" style="color:wheat">My Socials:

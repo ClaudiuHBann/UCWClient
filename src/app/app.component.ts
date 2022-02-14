@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
+import { ActivatedRoute, ParamMap, Router } from '@angular/router'
+import { isNumeric } from 'jquery'
 import { ConvertInfo } from './models/convert-info'
 
 @Component({
@@ -9,13 +11,32 @@ import { ConvertInfo } from './models/convert-info'
 })
 
 export class AppComponent {
-	constructor(private http: HttpClient) { }
+	constructor(private http: HttpClient, private _route: ActivatedRoute, private _router: Router) {
+		for (let index = 0; index < ConvertInfo.categoriesFromTo.length; index++) {
+			if (isNumeric(ConvertInfo.categoriesFromTo[index][0])) {
+				continue
+			}
+
+			ConvertInfo.categoriesFromTo[index] = ConvertInfo.categoriesFromTo[index].sort()
+		}
+
+		this._route.queryParams.subscribe(params => {
+			console.log(params["category"]);
+			console.log(params["category"] != undefined)
+
+			if (params["category"] != undefined) {
+				console.log("am intrat")
+				this.OnClickButtonCategory(ConvertInfo.categories.indexOf(params["category"]))
+			}
+		});
+	}
 
 	title = "Universal Converter"
 	currentCategory = "Choose a category..."
 
 	textAreaInputText = ""
 	textAreaOutputText = ""
+	lastContactMeInfo = ""
 
 	OnClickButtonCategory(categoryNumber: number) {
 		this.currentCategory = ConvertInfo.categories[categoryNumber - 1] + " Converter"
@@ -32,6 +53,32 @@ export class AppComponent {
 
 		this.textAreaInputText = ""
 		this.textAreaOutputText = ""
+
+		this._router.navigate([], {
+			relativeTo: this._route,
+			queryParams: {
+				category: ConvertInfo.categories[categoryNumber - 1]
+			},
+			queryParamsHandling: 'merge'
+		});
+	}
+
+	OnClickModal() {
+		if (this.lastContactMeInfo != "") {
+			navigator.clipboard.writeText(this.lastContactMeInfo)
+		}
+	}
+
+	OnClickButtonContactMe(contactMeType: string) {
+		var contactMeButton = document.getElementById(contactMeType)
+		if (contactMeButton != null && contactMeButton.textContent != null) {
+			this.lastContactMeInfo = contactMeButton.textContent.substring(1)
+		}
+	}
+
+	OnClickButtonSearch() {
+		var search = document.getElementById("buttonSearch")
+		console.log("OnClickButtonSearch")
 	}
 
 	OnClickButtonSwitch() {
@@ -90,7 +137,7 @@ export class AppComponent {
 		a.setAttribute("href", href)
 		a.setAttribute("class", cles)
 
-
+		a.setAttribute("style", "color: wheat;") // temporary
 
 		a.setAttribute("onclic", "FromTo(index)")
 		a.onclick = () => this.FromTo(index)

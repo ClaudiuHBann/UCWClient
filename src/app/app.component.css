@@ -6,11 +6,33 @@
     border-color: wheat;
 }
 
+a:focus,
+button:focus {
+    outline: none;
+    box-shadow: none;
+}
+
 .navbar-toggler:focus,
 .navbar-toggler:active,
 .navbar-toggler-icon:focus {
     outline: none;
     box-shadow: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #3f3f3f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: wheat;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: wheat;
 }
 
 #toastID {
