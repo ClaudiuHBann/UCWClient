@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
-import { ActivatedRoute, Router } from '@angular/router'
+import { ActivatedRoute, Params, Router } from '@angular/router'
 import { isNumeric } from 'jquery'
+import { skip } from 'rxjs'
 import { ConvertInfo } from './models/convert-info'
 
 @Component({
@@ -22,61 +23,46 @@ export class AppComponent {
 	}
 
 	ngOnInit() {
-		this._route.queryParams.subscribe(params => {
-			if (params["category"] != undefined) {
-				if (ConvertInfo.categories.indexOf(params["category"]) == -1) {
-					this._router.navigate([], {
-						relativeTo: this._route,
-						queryParams: {
-							category: null
-						},
-						queryParamsHandling: 'merge'
-					});
-				}
-				else {
-					this.OnClickButtonCategory(ConvertInfo.categories.indexOf(params["category"]) + 1)
-					ConvertInfo.category = ConvertInfo.categories.indexOf(params["category"])
-				}
-			}
+		this._route.queryParamMap
+			.pipe(skip(1))
+			.subscribe(params => {
+				let queryParams: Params = {}
 
-			if (params["from"] != undefined) {
-				if (ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["from"]) == -1) {
-					this._router.navigate([], {
-						relativeTo: this._route,
-						queryParams: {
-							from: null
-						},
-						queryParamsHandling: 'merge'
-					});
+				let category = params.get("category")
+				if (category != null && ConvertInfo.categories.indexOf(category) != -1) {
+					queryParams["category"] = category
+					
+					this.OnClickButtonCategory(ConvertInfo.categories.indexOf(category) + 1)
+					ConvertInfo.category = ConvertInfo.categories.indexOf(category)
 				}
-				else {
+				
+				let from = params.get("from")
+				if (from != null && ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(from) != -1) {
+					queryParams["from"] = from
+					
 					var element = document.getElementById("dropdownMenuButtonFrom")
 					if (element) {
-						element.textContent = params["from"]
-						ConvertInfo.from = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["from"])
+						element.textContent = from
+						ConvertInfo.from = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(from)
 					}
 				}
-			}
+				
+				let to = params.get("to")
+				if (to != null && ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(to) != -1) {
+					queryParams["to"] = to
 
-			if (params["to"] != undefined) {
-				if (ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["to"]) == -1) {
-					this._router.navigate([], {
-						relativeTo: this._route,
-						queryParams: {
-							to: null
-						},
-						queryParamsHandling: 'merge'
-					});
-				}
-				else {
 					var element = document.getElementById("dropdownMenuButtonTo")
 					if (element) {
-						element.textContent = params["to"]
-						ConvertInfo.to = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(params["to"])
+						element.textContent = to
+						ConvertInfo.to = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(to)
 					}
 				}
-			}
-		});
+
+				this._router.navigate([], {
+					relativeTo: this._route,
+					queryParams: queryParams
+				});
+			})
 	}
 
 	title = "Universal Converter"
