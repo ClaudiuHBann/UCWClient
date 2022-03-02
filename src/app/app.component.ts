@@ -27,34 +27,56 @@ export class AppComponent {
 			.pipe(skip(1))
 			.subscribe(params => {
 				let queryParams: Params = {}
-
-				let category = params.get("category")
-				if (category != null && ConvertInfo.categories.indexOf(category) != -1) {
-					queryParams["category"] = category
-					
-					this.OnClickButtonCategory(ConvertInfo.categories.indexOf(category) + 1)
-					ConvertInfo.category = ConvertInfo.categories.indexOf(category)
-				}
 				
-				let from = params.get("from")
-				if (from != null && ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(from) != -1) {
-					queryParams["from"] = from
+				let keyCategory, keyFrom, keyTo: string | null = null
+				params.keys.forEach(key => {
+					let keyLowerCase = key.toLowerCase()
 					
-					var element = document.getElementById("dropdownMenuButtonFrom")
-					if (element) {
-						element.textContent = from
-						ConvertInfo.from = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(from)
+					if (keyLowerCase == "category") {
+						keyCategory = key
+					} else if (keyLowerCase == "from") {
+						keyFrom = key
+					} else if (keyLowerCase == "to") {
+						keyTo = key
+					}
+				})
+
+				if (keyCategory != null) {
+					let category = params.get(keyCategory)
+					let indexOfCategory = ConvertInfo.categories.findIndex(item => category?.toLowerCase() === item.toLowerCase());
+					if (category != null && indexOfCategory != -1) {
+						queryParams["category"] = category.toLowerCase()
+
+						this.OnClickButtonCategory(indexOfCategory + 1)
+						ConvertInfo.category = indexOfCategory
 					}
 				}
-				
-				let to = params.get("to")
-				if (to != null && ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(to) != -1) {
-					queryParams["to"] = to
 
-					var element = document.getElementById("dropdownMenuButtonTo")
-					if (element) {
-						element.textContent = to
-						ConvertInfo.to = ConvertInfo.categoriesFromTo[ConvertInfo.category].indexOf(to)
+				if (keyFrom != null) {
+					let from = params.get(keyFrom)
+					let indexOfFrom = ConvertInfo.categoriesFromTo[ConvertInfo.category].findIndex(item => from?.toLowerCase() === item.toLowerCase());
+					if (from != null && indexOfFrom != -1) {
+						queryParams["from"] = from.toLowerCase()
+
+						var element = document.getElementById("dropdownMenuButtonFrom")
+						if (element) {
+							element.textContent = ConvertInfo.categoriesFromTo[ConvertInfo.category][indexOfFrom]
+							ConvertInfo.from = indexOfFrom
+						}
+					}
+				}
+
+				if (keyTo != null) {
+					let to = params.get(keyTo)
+					let indexOfTo = ConvertInfo.categoriesFromTo[ConvertInfo.category].findIndex(item => to?.toLowerCase() === item.toLowerCase());
+					if (to != null && indexOfTo != -1) {
+						queryParams["to"] = to.toLowerCase()
+
+						var element = document.getElementById("dropdownMenuButtonTo")
+						if (element) {
+							element.textContent = ConvertInfo.categoriesFromTo[ConvertInfo.category][indexOfTo]
+							ConvertInfo.to = indexOfTo
+						}
 					}
 				}
 
