@@ -27,11 +27,11 @@ export class AppComponent {
 			.pipe(skip(1))
 			.subscribe(params => {
 				let queryParams: Params = {}
-				
+
 				let keyCategory, keyFrom, keyTo: string | null = null
 				params.keys.forEach(key => {
 					let keyLowerCase = key.toLowerCase()
-					
+
 					if (keyLowerCase == "category") {
 						keyCategory = key
 					} else if (keyLowerCase == "from") {
@@ -41,6 +41,10 @@ export class AppComponent {
 					}
 				})
 
+				if (keyCategory != null && keyFrom == null && keyTo == null) {
+					localStorage.removeItem("tait")
+				}
+
 				if (keyCategory != null) {
 					let category = params.get(keyCategory)
 					let indexOfCategory = ConvertInfo.categories.findIndex(item => category?.toLowerCase() === item.toLowerCase());
@@ -48,6 +52,7 @@ export class AppComponent {
 						queryParams["category"] = category.toLowerCase()
 
 						this.OnClickButtonCategory(indexOfCategory + 1)
+
 						ConvertInfo.category = indexOfCategory
 					}
 				}
@@ -84,6 +89,9 @@ export class AppComponent {
 					relativeTo: this._route,
 					queryParams: queryParams
 				});
+
+
+				this.SetTextAreaInputText()
 			})
 	}
 
@@ -138,6 +146,16 @@ export class AppComponent {
 	}
 
 	OnClickButtonSwitch() {
+		if (ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0]) == -1) {
+			return
+		}
+
+		if (ConvertInfo.from == -1 && ConvertInfo.to == -1) {
+			return
+		}
+
+		this.SaveTextAreaInputText()
+
 		var from = document.getElementById("dropdownMenuButtonFrom")
 		var to = document.getElementById("dropdownMenuButtonTo")
 
@@ -157,12 +175,27 @@ export class AppComponent {
 				from: ConvertInfo.categoriesFromTo[ConvertInfo.category][ConvertInfo.from],
 				to: ConvertInfo.categoriesFromTo[ConvertInfo.category][ConvertInfo.to]
 			},
-			queryParamsHandling: 'merge'
+			queryParamsHandling: 'merge',
+
 		});
+	}
+
+	SaveTextAreaInputText() {
+		localStorage.setItem("tait", this.textAreaInputText);
+	}
+
+	SetTextAreaInputText() {
+		var tait = localStorage.getItem("tait");
+		if (tait != null) {
+			this.textAreaInputText = tait;
+		}
+		//localStorage.removeItem("tait")
 	}
 
 	FromTo(index: number) {
 		let indexOfCurrentCategory = ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])
+
+		this.SaveTextAreaInputText()
 
 		if (index < 0) {
 			var element = document.getElementById("dropdownMenuButtonFrom")
@@ -274,12 +307,24 @@ export class AppComponent {
 	}
 
 	OnClickButtonConvert() {
+		if (ConvertInfo.from == -1 || ConvertInfo.to == -1 || ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0]) == -1) {
+			return
+		}
+
 		this.textAreaOutputText = ""
 		this.FormatInputTextAndChangeCIItems()
 
 		ConvertInfo.category = ConvertInfo.categories.indexOf(this.currentCategory.split(' ')[0])
 
-		this.http.post<any>("http://162.55.32.18:8/ConvertInfo/Post", {
+		console.log({
+			"category": ConvertInfo.category,
+			"items": ConvertInfo.items,
+			"from": ConvertInfo.from,
+			"to": ConvertInfo.to
+		});
+
+		// http://162.55.32.18:8/ConvertInfo/Post
+		this.http.post<any>("http://localhost:5212/ConvertInfo/Post", {
 			"category": ConvertInfo.category,
 			"items": ConvertInfo.items,
 			"from": ConvertInfo.from,
@@ -287,9 +332,13 @@ export class AppComponent {
 		}, {
 			headers: { "Content-Type": "application/json" }
 		}).subscribe({
-			next: result => result.forEach((item: string) => {
-				this.textAreaOutputText += item + '\n'
-			}),
+			next: result => {
+				console.log(result)
+
+				result.forEach((item: string) => {
+					this.textAreaOutputText += item + '\n'
+				})
+			},
 			error: error => console.error(error)
 		})
 	}
