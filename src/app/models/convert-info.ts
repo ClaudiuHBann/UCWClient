@@ -3,7 +3,6 @@ import { Directive } from "@angular/core"
 @Directive()
 export class ConvertInfo {
     constructor() { }
-  
     ngOnInit(): void { }
   
     public static categories = ["Currency", "Temperature", "Number.Base"]

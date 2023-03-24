@@ -1,3 +1,60 @@
-body {
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #3f3f3f;
+}
+
+::-webkit-scrollbar-thumb {
+    background: wheat;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: wheat;
+}
+
+.theme-0 {
+    color: wheat;
+}
+
+.theme-01 {
+    color: wheat;
+    background-color: #333;
+    border-color: wheat;
+}
+
+.theme-02 {
+    color: wheat;
+    background-color: #333;
+}
+
+.theme-03 {
+    background-color: #3f3f3f;
+}
+
+.theme-04 {
+    background-color: #333;
+}
+
+.theme-05 {
+    color: wheat;
+    background-color: #3f3f3f;
+    border-color: transparent;
+}
+
+.theme-06 {
+    color: wheat;
+    border-color: wheat;
+}
+
+.theme-07 {
+    background: #333;
+    color: wheat;
+    border-color: #3f3f3f;
+}
+
+.theme-08 {
+    color: wheat;
     background-color: #3f3f3f;
 }

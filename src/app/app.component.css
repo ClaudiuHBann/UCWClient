@@ -19,82 +19,104 @@ button:focus {
     box-shadow: none;
 }
 
-::-webkit-scrollbar {
-    width: 10px;
+.btn-img {
+    background-color: #3f3f3f;
+    border-color: #3f3f3f;
+    background-size: contain;
+    width: 7%;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-::-webkit-scrollbar-track {
-    background: #3f3f3f;
-}
-
-::-webkit-scrollbar-thumb {
-    background: wheat;
-}
-
-::-webkit-scrollbar-thumb:hover {
-    background: wheat;
-}
-
-#toastID {
-    visibility: hidden;
-    color: wheat;
-    text-align: center;
-    border-radius: 25px;
-    left: 50%;
-    bottom: 30px;
-    font-size: medium;
+.text-area {
+    resize: vertical;
+    min-height: 250px;
+    border-radius: 15px;
     background-color: #333;
-    position: fixed;
-    transform: translate(-50%, -50%);
-    margin: 0 auto;
+    color: wheat;
+    border-color: #333;
 }
 
-#toastID.show {
-    visibility: visible;
-    -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
-    animation: fadein 0.5s, fadeout 0.5s 2.5s;
+div.options {
+    min-height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    padding-top: 1%;
 }
 
-@-webkit-keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
+button.option-switch {
+    grid-area: 1 / 1 / 2 / 2;
+    min-width: 33px;
+    min-height: 33px;
 }
 
-@keyframes fadein {
-    from {
-        bottom: 0;
-        opacity: 0;
-    }
-    to {
-        bottom: 30px;
-        opacity: 1;
-    }
+div.option-from {
+    grid-area: 1 / 2 / 2 / 3;
 }
 
-@-webkit-keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
-    }
-    to {
-        bottom: 0;
-        opacity: 0;
-    }
+button.option-convert {
+    grid-area: 1 / 3 / 2 / 4;
+    min-width: 33px;
+    min-height: 33px;
 }
 
-@keyframes fadeout {
-    from {
-        bottom: 30px;
-        opacity: 1;
+div.option-to {
+    grid-area: 1 / 4 / 2 / 5;
+}
+
+button.option-ctc {
+    grid-area: 1 / 5 / 2 / 6;
+    min-width: 33px;
+    min-height: 33px;
+}
+
+div.container-all {
+    padding-left: 20%;
+    padding-right: 30%;
+    padding-top: 1%;
+    padding-bottom: 1%;
+}
+
+@media screen and (max-width: 479px) {
+    div.container-all {
+        padding-left: 5%;
+        padding-right: 5%;
+        padding-top: 1%;
+        padding-bottom: 1%;
     }
-    to {
-        bottom: 0;
-        opacity: 0;
+    div.options {
+        display: grid;
+        min-height: 150px;
+        grid-auto-flow: column;
+        align-items: center;
+        justify-items: center;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(3, 1fr);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+    }
+    button.option-switch {
+        grid-area: 2 / 1 / 3 / 2;
+        min-width: 50px;
+        min-height: 50px;
+    }
+    div.option-from {
+        grid-area: 1 / 2 / 2 / 3;
+        align-self: flex-start;
+    }
+    button.option-convert {
+        grid-area: 2 / 2 / 3 / 3;
+        min-width: 50px;
+        min-height: 50px;
+    }
+    div.option-to {
+        grid-area: 3 / 2 / 4 / 3;
+        align-self: flex-end;
+    }
+    button.option-ctc {
+        grid-area: 2 / 3 / 3 / 4;
+        min-width: 50px;
+        min-height: 50px;
     }
 }

@@ -1,0 +1,64 @@
+<div class="modal fade" id="modalContactMe" tabindex="-1" role="dialog" aria-labelledby="modalContactMeLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content theme-03">
+
+            <div class="modal-header">
+                <h5 class="modal-title theme-0" id="modalContactMeLabel">
+                    Wohoo Hello There :)
+                </h5>
+                <button type="button" class="close theme-0" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">
+                        &times;
+                    </span>
+                </button>
+            </div>
+
+            <div class="modal-body theme-0">
+                Do you want to copy the selected contact me info to clipboard?
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary theme-02" data-dismiss="modal">
+                    No
+                </button>
+                <button type="button" class="btn btn-primary theme-01" data-dismiss="modal" (click)="OnClickModal()">
+                    Yes
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<footer class="bg-light text-center fixed-bottom">
+    <div class="text-center theme-04" style="display: flex">
+
+        <div class="container text-center theme-0" style="align-self: center;">
+            Contact Me:
+            <section style="display: inline-block;">
+                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContactMe" class="btn btn-primary btn-floating m-1" id="contactMeGoogle" (click)="OnClickButtonContactMe('contactMeGoogle')" style="min-width: 40px; min-height: 40px; background-color: #dd4b39;">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalContactMe" class="btn btn-primary btn-floating m-1" id="contactMeDiscord" (click)="OnClickButtonContactMe('contactMeDiscord')" style="min-width: 40px; min-height: 40px; background-color: #5865F2;">
+                    <i class="fab fa-discord"></i>
+                </a>
+            </section>
+        </div>
+
+        <div class="container text-center theme-0">
+            My Socials:
+            <section style="display: inline-block;">
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100011084952722" role="button">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac;" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/claudiuhbann/?hl=en" role="button">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a class="btn btn-primary btn-floating m-1" style="background-color: #333333;" target="_blank" rel="noopener noreferrer" href="https://github.com/ClaudiuHBann" role="button">
+                    <i class="fab fa-github"></i>
+                </a>
+            </section>
+        </div>
+
+    </div>
+</footer>

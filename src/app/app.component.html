@@ -1,193 +1,91 @@
-<nav class="navbar navbar-expand-lg sticky-top" style="background-color: #333;">
+<nav class="navbar navbar-expand-lg sticky-top theme-04">
     <div class="container-fluid">
-        <a class="navbar-brand" href="" style="padding-left: 25px; padding-right: 25px; font: bold; font-size: 25px; color: wheat;">Universal Converter</a>
+
+        <a class="navbar-brand theme-0" href="" style="padding-left: 25px; padding-right: 25px; font: bold; font-size: 25px;">
+            Universal Converter
+        </a>
+
         <button class="navbar-toggler ml-auto custom-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon" style="color: wheat;"></span>
+        <span class="navbar-toggler-icon theme-0"></span>
       </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(1)" onclick="event.preventDefault();" href="">Currency</a>
+                    <a class="nav-link theme-0" (click)="OnClickButtonCategory(1)" onclick="event.preventDefault();" href="">
+                        Currency
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" style="color: wheat;" (click)="OnClickButtonCategory(2)" onclick="event.preventDefault();" href="">Temperature</a>
+                    <a class="nav-link theme-0" (click)="OnClickButtonCategory(2)" onclick="event.preventDefault();" href="">
+                        Temperature
+                    </a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" style="color: wheat;" aria-expanded="false">Number</a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color: #333;">
-                        <li><a class="dropdown-item" href="" (click)="OnClickButtonCategory(3)" onclick="event.preventDefault();" style="color: wheat;">Base</a></li>
+                <li class="nav-item dropdown theme-0">
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Number
+                    </a>
+                    <ul class="dropdown-menu theme-04" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item theme-0" href="" (click)="OnClickButtonCategory(3)" onclick="event.preventDefault();">
+                            Base
+                        </a></li>
                     </ul>
                 </li>
             </ul>
             <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Search..." aria-label="Search" style="background-color: #333; color: wheat; border-color: wheat;">
-                <button class="btn" id="buttonSearch" (click)="OnClickButtonSearch()" style="color: wheat; border-color: wheat;" type="submit">Search</button>
+                <div class="dropdown option-from">
+                    <input class="form-control me-2 theme-01" id="searchQuery" (focus)="OnFocusInputSearch()" (focusout)="OnFocusOutInputSearch()" (keyup)="OnKeyDownInput()" type="search" placeholder="Search..." aria-label="Search">
+                    <ul class="dropdown-menu theme-04" aria-labelledby="buttonSearch" id="dropdownMenuSearchUL" style="min-width: 215px; max-height: 170px; overflow-y: auto;"></ul>
+                </div>
+                <button class="btn btn-secondary theme-06" (click)="OnClickButtonSearch()" type="submit" id="buttonSearch" data-toggle="dropdown" aria-expanded="false">
+                    Search
+                </button>
             </form>
         </div>
     </div>
 </nav>
 
-<div style="padding-left: 20%; padding-right: 30%; padding-top: 1%; padding-bottom: 1%; color: wheat;">
+<div class="theme-08 container-all">
     <h1>{{currentCategory}}</h1>
 
     <br>
 
     <div class="mb-3">
-        <textarea class="form-control" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333; border-radius: 15px;"></textarea>
+        <textarea class="form-control text-area theme-09" [(ngModel)]="textAreaInputText" placeholder="Input text..." id="textAreaInput"></textarea>
     </div>
 
-    <div class="flex-container" style="display: flex; justify-content: space-evenly; padding-top: 1%;">
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonSwitch()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">Switch</button>
+    <div class="options" style="padding-top: 1%;">
+        <button type="button" class="btn btn-secondary btn-img option-switch" (click)="OnClickButtonSwitch()" style="background-image: url(../assets/Switch.png);"></button>
 
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">
+        <div class="dropdown option-from">
+            <button class="btn btn-secondary dropdown-toggle theme-07" (click)="OnClickButtonFrom()" type="button" id="dropdownMenuButtonFrom" data-toggle="dropdown" aria-expanded="false" style="border-radius: 15px;">
                 From
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto; background-color: #333;"></ul>
+            <ul class="dropdown-menu theme-04" aria-labelledby="dropdownMenuButtonFrom" id="dropdownMenuFromUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonConvert()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">Convert</button>
+        <button type="button" class="btn btn-secondary btn-img option-convert" (click)="OnClickButtonConvert()" style="background-image: url(../assets/Convert.png);"></button>
 
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">
+        <div class="dropdown option-to">
+            <button class="btn btn-secondary dropdown-toggle theme-07" (click)="OnClickButtonTo()" type="button" id="dropdownMenuButtonTo" data-toggle="dropdown" aria-expanded="false" style="border-radius: 15px;">
                 To
             </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto; background-color: #333;"></ul>
+            <ul class="dropdown-menu theme-04" aria-labelledby="dropdownMenuButtonTo" id="dropdownMenuToUL" style="max-height: 170px; overflow-y: auto;"></ul>
         </div>
 
-        <button type="button" class="btn btn-secondary" (click)="OnClickButtonCTC()" style="background: #333; color: wheat; border-color: #3f3f3f; border-radius: 15px;">CTC</button>
+        <button type="button" class="btn btn-secondary btn-img option-ctc" (click)="OnClickButtonCTC()" style="background-image: url(../assets/CTC.png);"></button>
     </div>
 
     <br>
 
     <div class="mb-3">
-        <textarea readonly class="form-control" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput" style="resize: vertical; min-height: 250px; background-color: #333; color: wheat; border-color: #333; border-radius: 15px;"></textarea>
+        <textarea readonly class="form-control text-area theme-09" [(ngModel)]="textAreaOutputText" placeholder="Output text..." id="textAreaOutput"></textarea>
     </div>
 </div>
 
-<div class="toast" role="alert" id="toastID" aria-live="assertive" aria-atomic="true">
-    <div class="toast-body" style="text-align: center; font-size: larger; color: wheat;">
-        Output text has been copied to clipboard...
-    </div>
-</div>
+<app-sign-up></app-sign-up>
+<app-log-in></app-log-in>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content" style="background-color: #3f3f3f;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel" style="color: wheat;">Wohoo Hello There :)</h5>
-                <button type="button" class="close" data-dismiss="modal" style="color: wheat;" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-            </div>
-            <div class="modal-body" style="color: wheat;">
-                Do you want to copy the selected contact me info to clipboard?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" style="color: wheat; background-color: #333;" data-dismiss="modal">No</button>
-                <button type="button" class="btn btn-primary" style="color: wheat; background-color: #333; border-color: wheat;" data-dismiss="modal" (click)="OnClickModal()">Yes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<section class="vh-100" style="background-color: #3f3f3f;">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px; background-color: #333;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: wheat;">Sign up</p>
-                                <form class="mx-1 mx-md-4">
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw" style="color: wheat;"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example1c" style="color: wheat;">Username</label>
-                                            <input type="text" id="form3Example1c" class="form-control" style="color: wheat; background-color: #3f3f3f; border-color: transparent;" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: wheat;"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c" style="color: wheat;">Password</label>
-                                            <input type="password" id="form3Example4c" class="form-control" style="color: wheat; background-color: #3f3f3f; border-color: transparent;" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-key fa-lg me-3 fa-fw" style="color: wheat;"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4cd" style="color: wheat;">Repeat your password</label>
-                                            <input type="password" id="form3Example4cd" class="form-control" style="color: wheat; background-color: #3f3f3f; border-color: transparent;" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="button" class="btn btn-primary btn-lg" style="color: wheat; background-color: #3f3f3f; border-color: transparent;">Register</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<section class="vh-100" style="background-color: #3f3f3f;">
-    <div class="container h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-lg-12 col-xl-11">
-                <div class="card text-black" style="border-radius: 25px; background-color: #333;">
-                    <div class="card-body p-md-5">
-                        <div class="row justify-content-center">
-                            <div class="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
-                                <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4" style="color: wheat;">Log In</p>
-                                <form class="mx-1 mx-md-4">
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw" style="color: wheat;"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example1c2" style="color: wheat;">Username</label>
-                                            <input type="text" id="form3Example1c2" class="form-control" style="color: wheat; background-color: #3f3f3f; border-color: transparent;" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-lock fa-lg me-3 fa-fw" style="color: wheat;"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <label class="form-label" for="form3Example4c2" style="color: wheat;">Password</label>
-                                            <input type="password" id="form3Example4c2" class="form-control" style="color: wheat; background-color: #3f3f3f; border-color: transparent;" />
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
-                                        <button type="button" class="btn btn-primary btn-lg" style="color: wheat; background-color: #3f3f3f; border-color: transparent;">Log In</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<footer class="bg-light text-center fixed-bottom">
-    <div class="text-center" style="background-color: #333; display: flex">
-        <div class="container text-center" style="color: wheat;">Contact Me:
-            <section style="display: inline-block;">
-                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-floating m-1" id="contactMeGoogle" (click)="OnClickButtonContactMe('contactMeGoogle')" style="background-color: #dd4b39;"><i class="fab fa-google"></i> 123uidualcnnamreh@gmail.com</a>
-                <a type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary btn-floating m-1" id="contactMeDiscord" (click)="OnClickButtonContactMe('contactMeDiscord')" style="background-color: #5865F2;"><i class="fab fa-discord"></i> Claudiu HBann#6612</a>
-            </section>
-        </div>
-        <div class="container text-center" style="color:wheat">My Socials:
-            <section style="display: inline-block;">
-                <a class="btn btn-primary btn-floating m-1" style="background-color: #3b5998;" target="_blank" rel="noopener noreferrer" href="https://www.facebook.com/profile.php?id=100011084952722" role="button"><i class="fab fa-facebook-f"></i></a>
-                <a class="btn btn-primary btn-floating m-1" style="background-color: #ac2bac;" target="_blank" rel="noopener noreferrer" href="https://www.instagram.com/claudiuhbann/?hl=en" role="button"><i class="fab fa-instagram"></i></a>
-                <a class="btn btn-primary btn-floating m-1" style="background-color: #333333;" target="_blank" rel="noopener noreferrer" href="https://github.com/ClaudiuHBann" role="button"><i class="fab fa-github"></i></a>
-            </section>
-        </div>
-    </div>
-</footer>
+<app-toast></app-toast>
+<app-footer></app-footer>
 
 <router-outlet></router-outlet>

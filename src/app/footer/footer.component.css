@@ -1,0 +1,9 @@
+.btn:hover {
+    background: transparent;
+    border-color: transparent;
+}
+
+.close:hover {
+    background: transparent;
+    color: transparent;
+}
